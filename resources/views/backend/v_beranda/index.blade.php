@@ -1,99 +1,30 @@
 @extends('backend.v_layouts.app')
-
 @section('content')
-
-<h4>Halaman Beranda</h4>
-
-<p>
-    Selamat Datang,
-    <b>{{ Auth::user()->name }}</b>
-    pada aplikasi Toko Online dengan hak akses yang anda miliki sebagai
-    <b>Super Admin</b>
-    ini adalah halaman utama dari aplikasi ini.
-</p>
-
-<div class="card">
-    <div class="card-body">
-
-        <h5 class="card-title">Basic Datatable</h5>
-
-        <div class="table-responsive">
-            <table id="zero_config" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- contentAwal -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body border-top">
+                    <h5 class="card-title"> {{$judul}}</h5>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"> Selamat Datang, {{ Auth::user()->nama
+    }}</h4>
+                        Aplikasi Toko Online dengan hak akses yang anda miliki sebagai
+                        <b>
+                            @if (Auth::user()->role == 1)
+                                Super Admin
+                            @elseif(Auth::user()->role == 0)
+                                Admin
+                            @endif
+                        </b>
+                        ini adalah halaman utama dari aplikasi Web Programming. Studi Kasus
+                        Toko Online.
+                        <hr>
+                        <p class="mb-0">Kuliah..? BSI Aja !!!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-</div>
-
+    <!-- contentAkhir -->
 @endsection

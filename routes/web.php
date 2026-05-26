@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect()->route('backend.login');
@@ -20,3 +21,5 @@ Route::get('backend/beranda', [BerandaController::class, 'berandaBackend'])
 
 Route::post('backend/logout', [LoginController::class, 'logoutBackend'])
     ->name('backend.logout');
+
+Route::resource('backend/user', UserController::class, ['as' => 'backend']) ->middleware('auth');
