@@ -27,11 +27,11 @@
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-     <div class="preloader">
-        <div class="lds-ripple"> 
-          <div class="lds-pos"></div>
+    <div class="preloader">
+        <div class="lds-ripple">
             <div class="lds-pos"></div>
-            </div> 
+            <div class="lds-pos"></div>
+        </div>
     </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
@@ -44,7 +44,8 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin5">
                     <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
@@ -54,21 +55,21 @@
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
                             <img src="{{ asset('image/icon_univ_bsi.png') }}" alt="homepage" class="light-logo" />
-                           
+
                         </b>
                         <!--End Logo icon -->
-                         <!-- Logo text -->
+                        <!-- Logo text -->
                         <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="{{ asset('image/logo_text.png') }}" alt="homepage" class="light-logo" />
-                            
+                            <!-- dark Logo text -->
+                            <img src="{{ asset('image/logo_text.png') }}" alt="homepage" class="light-logo" />
+
                         </span>
                         <!-- Logo icon -->
                         <!-- <b class="logo-icon"> -->
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-                            
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
+
                         <!-- </b> -->
                         <!--End Logo icon -->
                     </a>
@@ -78,7 +79,10 @@
                     <!-- ============================================================== -->
                     <!-- Toggle which is visible on mobile only -->
                     <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -88,7 +92,9 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                        <li class="nav-item d-none d-md-block"><a
+                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
                         <!-- ============================================================== -->
                         <!-- create new -->
                         <!-- ============================================================== -->
@@ -114,7 +120,7 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                
+
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
@@ -123,15 +129,28 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('backend/assets/images/users/1.jpg') }}" alt="user" class="rounded-circle" width="31"></a>
-
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> Profile Saya</a>
-
-                                <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('keluar-app').submit();"><i class="fa fa-power-off m-r-5 m-l-5"></i> Keluar</a>
-                                <div class="dropdown-divider"></div> 
+                            <a class="nav-link dropdown-toggle text-muted waves-effect
+waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
+                                @if (Auth::user()->foto)
+                                    <img src="{{ asset('storage/img-user/' . Auth::user()->foto) }}" alt="user"
+                                        class="rounded-circle" width="31">
+                                @else
+                                    <img src="{{ asset('storage/img-user/img-default.jpg') }}" alt="user"
+                                        class="rounded-circle" width="31">
+                                @endif
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd
+animated">
+                                <a class="dropdown-item" href="{{
+    route('backend.user.edit', Auth::user()->id) }}"><i class="ti-user m-r-5 m-l-5"></i> Profil
+                                    Saya</a>
+                                <a class="dropdown-item" href=""
+                                    onclick="event.preventDefault(); document.getElementById('keluar-app').submit();"><i
+                                        class="fa fa-power-off m-r-5 m-l-5"></i> Keluar</a>
+                                <div class="dropdown-divider"></div>
                             </div>
                         </li>
+
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
@@ -159,14 +178,14 @@
                 waves-dark sidebar-link" href="{{ route('backend.user.index') }}" aria-expanded="false"><i
                                     class="mdi mdi-account"></i><span class="hide-menu">User</span></a>
                         </li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waveseffect waves-dark" href="javascript:void(0)"
-                                aria-expanded="false"><i class="mdi mdishopping"></i><span class="hide-menu">Data Produk </span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waveseffect waves-dark"
+                                href="javascript:void(0)" aria-expanded="false"><i class="mdi mdishopping"></i><span
+                                    class="hide-menu">Data Produk </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item"><a href="icon-material.html" class="sidebar-link"><i
-                                            class="mdi mdi-chevron-right"></i><span class="hide-menu"> Kategori
-                                        </span></a>
+                                <li class="sidebar-item"><a href="{{ route('backend.kategori.index') }}" class="sidebar-link"><i
+                                            class="mdi mdi-chevron-right"></i><span class="hidemenu"> Kategori </span></a>
                                 </li>
-                                <li class="sidebar-item"><a href="icon-fontawesome.html" class="sidebar-link"><i
+                                <li class="sidebar-item"><a href="{{route('backend.produk.index') }}" class="sidebar-link"><i
                                             class="mdi mdi-chevron-right"></i><span class="hide-menu"> Produk
                                         </span></a>
                                 </li>
@@ -200,10 +219,10 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                
-                {{-- @yieldAwal  --}}
+
+                {{-- @yieldAwal --}}
                 @yield('content')
-                {{-- @yieldAkhir  --}}
+                {{-- @yieldAkhir --}}
 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -223,7 +242,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                Web Programming. Studi Kasus Toko Online <a href="https://bsi.ac.id/">Kuliah..? BSI Aja !!!</a> 
+                Web Programming. Studi Kasus Toko Online <a href="https://bsi.ac.id/">Kuliah..? BSI Aja !!!</a>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -262,11 +281,48 @@
          ****************************************/
         $('#zero_config').DataTable();
     </script>
-    <!-- form keluar app --> 
-    <form id="keluar-app" action="{{ route('backend.logout') }}" method="POST" class="d-none"> 
-        @csrf 
-    </form> 
-    <!-- form keluar app end --> 
+    <!-- form keluar app -->
+    <form id="keluar-app" action="{{ route('backend.logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
+
+    <!-- sweetalert -->
+    <script src="{{ asset('sweetalert/sweetalert2.all.min.js') }}"></script>
+    <!-- sweetalert End -->
+    <!-- konfirmasi success-->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}"
+            });
+        </script>
+    @endif
+    <!-- konfirmasi success End-->
+    <script type="text/javascript">
+        //Konfirmasi delete
+        $(document).on('click', '.show_confirm', function (event) {
+            var form = $(this).closest("form");
+            var konfdelete = $(this).data("konf-delete");
+            event.preventDefault();
+            Swal.fire({
+                title: 'Konfirmasi Hapus Data?',
+                html: "Data yang dihapus <strong>" + konfdelete + "</strong> tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, dihapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+    <!-- form keluar app end -->
 </body>
 
 </html>
