@@ -19,5 +19,15 @@ class Produk extends Model
     return $this->belongsTo(User::class);
     }
 
+    public function gambar()
+    {
+    return $this->hasMany(FotoProduk::class, 'produk_id');
+    }
+
+    // public function fotoProduk()
+    // {
+    //     return $this->hasMany(FotoProduk::class);
+    // }
+
     use HasFactory;
 }

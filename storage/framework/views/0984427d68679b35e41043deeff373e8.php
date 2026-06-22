@@ -9,12 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('image/icon_univ_bsi.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(asset('image/icon_univ_bsi.png')); ?>">
     <title>Toko Online</title>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/extra-libs/multicheck/multicheck.css') }}">
-    <link href="{{ asset('backend/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/dist/css/style.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('backend/assets/extra-libs/multicheck/multicheck.css')); ?>">
+    <link href="<?php echo e(asset('backend/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('backend/dist/css/style.min.css')); ?>" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,19 +49,19 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="{{ route('backend.beranda') }}">
+                    <a class="navbar-brand" href="<?php echo e(route('backend.beranda')); ?>">
                         <!-- Logo icon -->
                         <b class="logo-icon p-l-10">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{{ asset('image/icon_univ_bsi.png') }}" alt="homepage" class="light-logo" />
+                            <img src="<?php echo e(asset('image/icon_univ_bsi.png')); ?>" alt="homepage" class="light-logo" />
 
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="{{ asset('image/logo_text.png') }}" alt="homepage" class="light-logo" />
+                            <img src="<?php echo e(asset('image/logo_text.png')); ?>" alt="homepage" class="light-logo" />
 
                         </span>
                         <!-- Logo icon -->
@@ -131,18 +131,17 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect
 waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
-                                @if (Auth::user()->foto)
-                                    <img src="{{ asset('storage/img-user/' . Auth::user()->foto) }}" alt="user"
+                                <?php if(Auth::user()->foto): ?>
+                                    <img src="<?php echo e(asset('storage/img-user/' . Auth::user()->foto)); ?>" alt="user"
                                         class="rounded-circle" width="31">
-                                @else
-                                    <img src="{{ asset('storage/img-user/img-default.jpg') }}" alt="user"
+                                <?php else: ?>
+                                    <img src="<?php echo e(asset('storage/img-user/img-default.jpg')); ?>" alt="user"
                                         class="rounded-circle" width="31">
-                                @endif
+                                <?php endif; ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd
 animated">
-                                <a class="dropdown-item" href="{{
-    route('backend.user.edit', Auth::user()->id) }}"><i class="ti-user m-r-5 m-l-5"></i> Profil
+                                <a class="dropdown-item" href="<?php echo e(route('backend.user.edit', Auth::user()->id)); ?>"><i class="ti-user m-r-5 m-l-5"></i> Profil
                                     Saya</a>
                                 <a class="dropdown-item" href=""
                                     onclick="event.preventDefault(); document.getElementById('keluar-app').submit();"><i
@@ -171,27 +170,27 @@ animated">
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect
-                waves-dark sidebar-link" href="{{ route('backend.beranda') }}" aria-expanded="false"><i
+                waves-dark sidebar-link" href="<?php echo e(route('backend.beranda')); ?>" aria-expanded="false"><i
                                     class="mdi mdi-view-dashboard"></i><span class="hide-menu">Beranda</span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect
-                waves-dark sidebar-link" href="{{ route('backend.user.index') }}" aria-expanded="false"><i
+                waves-dark sidebar-link" href="<?php echo e(route('backend.user.index')); ?>" aria-expanded="false"><i
                                     class="mdi mdi-account"></i><span class="hide-menu">User</span></a>
                         </li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waveseffect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdishopping"></i><span
                                     class="hide-menu">Data Produk </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
-                                <li class="sidebar-item"><a href="{{ route('backend.kategori.index') }}" class="sidebar-link"><i
+                                <li class="sidebar-item"><a href="<?php echo e(route('backend.kategori.index')); ?>" class="sidebar-link"><i
                                             class="mdi mdi-chevron-right"></i><span class="hidemenu"> Kategori </span></a>
                                 </li>
 
                                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                                         aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Laporan </span></a>
                                     <ul aria-expanded="false" class="collapse first-level">
-                                        <li class="sidebar-item"><a href="{{ route('backend.laporan.formuser') }}" class="sidebar-link"><i class="mdi mdi-chevronright"></i><span class="hide-menu">
+                                        <li class="sidebar-item"><a href="<?php echo e(route('backend.laporan.formuser')); ?>" class="sidebar-link"><i class="mdi mdi-chevronright"></i><span class="hide-menu">
                                                     User </span></a></li>
-                                        <li class="sidebar-item"><a href="{{ route('backend.laporan.formproduk') }}" class="sidebar-link"><i class="mdi mdi-chevronright"></i><span
+                                        <li class="sidebar-item"><a href="<?php echo e(route('backend.laporan.formproduk')); ?>" class="sidebar-link"><i class="mdi mdi-chevronright"></i><span
                                                     class="hide-menu"> Produk </span></a></li>
                                     </ul>
                                 </li>
@@ -229,9 +228,9 @@ animated">
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
 
-                {{-- @yieldAwal --}}
-                @yield('content')
-                {{-- @yieldAkhir --}}
+                
+                <?php echo $__env->yieldContent('content'); ?>
+                
 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -267,23 +266,23 @@ animated">
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{ asset('backend/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src="<?php echo e(asset('backend/libs/jquery/dist/jquery.min.js')); ?>"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{ asset('backend/libs/popper.js/dist/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('backend/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="<?php echo e(asset('backend/libs/popper.js/dist/umd/popper.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/libs/bootstrap/dist/js/bootstrap.min.js')); ?>"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{{ asset('backend/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/extra-libs/sparkline/sparkline.js') }}"></script>
+    <script src="<?php echo e(asset('backend/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/assets/extra-libs/sparkline/sparkline.js')); ?>"></script>
     <!--Wave Effects -->
-    <script src="{{ asset('backend/dist/js/waves.js') }}"></script>
+    <script src="<?php echo e(asset('backend/dist/js/waves.js')); ?>"></script>
     <!--Menu sidebar -->
-    <script src="{{ asset('backend/dist/js/sidebarmenu.js') }}"></script>
+    <script src="<?php echo e(asset('backend/dist/js/sidebarmenu.js')); ?>"></script>
     <!--Custom JavaScript -->
-    <script src="{{ asset('backend/dist/js/custom.min.js') }}"></script>
+    <script src="<?php echo e(asset('backend/dist/js/custom.min.js')); ?>"></script>
     <!-- this page js -->
-    <script src="{{ asset('backend/assets/extra-libs/multicheck/datatable-checkbox-init.js') }}"></script>
-    <script src="{{ asset('backend/assets/extra-libs/multicheck/jquery.multicheck.js') }}"></script>
-    <script src="{{ asset('backend/assets/extra-libs/DataTables/datatables.min.js') }}"></script>
+    <script src="<?php echo e(asset('backend/assets/extra-libs/multicheck/datatable-checkbox-init.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/assets/extra-libs/multicheck/jquery.multicheck.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend/assets/extra-libs/DataTables/datatables.min.js')); ?>"></script>
     <script>
         /****************************************
          *       Basic Table                   *
@@ -291,23 +290,23 @@ animated">
         $('#zero_config').DataTable();
     </script>
     <!-- form keluar app -->
-    <form id="keluar-app" action="{{ route('backend.logout') }}" method="POST" class="d-none">
-        @csrf
+    <form id="keluar-app" action="<?php echo e(route('backend.logout')); ?>" method="POST" class="d-none">
+        <?php echo csrf_field(); ?>
     </form>
 
     <!-- sweetalert -->
-    <script src="{{ asset('sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="<?php echo e(asset('sweetalert/sweetalert2.all.min.js')); ?>"></script>
     <!-- sweetalert End -->
     <!-- konfirmasi success-->
-    @if (session('success'))
+    <?php if(session('success')): ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: "{{ session('success') }}"
+                text: "<?php echo e(session('success')); ?>"
             });
         </script>
-    @endif
+    <?php endif; ?>
     <!-- konfirmasi success End-->
     <script type="text/javascript">
         //Konfirmasi delete
@@ -344,7 +343,7 @@ animated">
             }
         }
     </script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="<?php echo e(asset('ckeditor/ckeditor.js')); ?>"></script>
     <!-- <script
     src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script> -->
     <script>
@@ -357,4 +356,4 @@ animated">
     <!-- form keluar app end -->
 </body>
 
-</html>
+</html><?php /**PATH D:\PROJECT RADIT\Toko_online-Laravel\resources\views/backend/v_layouts/app.blade.php ENDPATH**/ ?>

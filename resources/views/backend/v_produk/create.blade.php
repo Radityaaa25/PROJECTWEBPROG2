@@ -14,11 +14,10 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Foto</label>
-                    <input type="file" name="foto" class="form-control
-    @error('foto') is-invalid @enderror">
+                    <img class="foto-preview">
+                    <input type="file" name="foto" class="form-control @error('foto') is-invalid @enderror" onchange="previewFoto()">
                     @error('foto')
-                      <div class="invalid-feedback alert-danger">{{ $message
-                          }}</div>
+                      <div class="invalid-feedback alert-danger">{{ $message }}</div>
                     @enderror
                   </div>
                 </div>
@@ -42,7 +41,7 @@
                   <div class="form-group">
                     <label>Nama Produk</label>
                     <input type="text" name="nama_produk" value="{{
-    old('nama_produk') }}" class="form-control @error('nama_produk') is-invalid @enderror"
+  old('nama_produk') }}" class="form-control @error('nama_produk') is-invalid @enderror"
                       placeholder="Masukkan Nama Prod">
                     @error('nama_produk')
                       <span class="invalid-feedback alert-danger" role="alert">
@@ -52,8 +51,9 @@
                   </div>
                   <div class="form-group">
                     <label>Detail</label><br>
-                    <textarea name="detail" class="form-control
-                      @error('detail') is-invalid @enderror">{{ old('detail') }}</textarea>
+                    <textarea name="detail" class="form-control @error('detail') is-invalid @enderror"
+                      id="ckeditor">{{ old('detail') }}</textarea>
+
                     @error('detail')
                       <span class="invalid-feedback alert-danger" role="alert">
                         {{ $message }}
