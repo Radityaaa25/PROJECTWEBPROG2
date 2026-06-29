@@ -28,12 +28,16 @@ class ChatbotController extends Controller
         $totalProduk = $produks->count();
         $totalKategori = Kategori::count();
         $totalUser = User::count();
+        $userSuperAdmin = User::where('role', 1)->count();
+        $userAdmin = User::where('role', 0)->count();
+        $userBiasa = User::where('role', 2)->count();
+
         $totalTransaksi = Transaksi::count();
 
         $statistikKonteks = "Statistik Database Saat Ini:\n"
             . "- Jumlah Kategori: {$totalKategori}\n"
             . "- Jumlah Produk: {$totalProduk}\n"
-            . "- Jumlah User: {$totalUser}\n"
+            . "- Jumlah Keseluruhan User: {$totalUser} (Rincian: {$userSuperAdmin} Super Admin, {$userAdmin} Admin, {$userBiasa} User Biasa)\n"
             . "- Jumlah Transaksi: {$totalTransaksi}\n\n";
 
         $dataProdukText = "";
