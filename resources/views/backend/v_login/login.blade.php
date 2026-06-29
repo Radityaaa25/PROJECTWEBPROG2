@@ -45,7 +45,7 @@
                         <span class="db"><img src="{{ asset('image/icon_univ_bsi.png') }}" alt="logo" /></span>
                     </div>
                     <!-- Form -->
-                    <form class="form-horizontal m-t-20" id="loginform" action="{{ route('backend.login.proses') }}" method="post">
+                    <form class="form-horizontal m-t-20" id="loginform" action="{{ route('backend.login') }}" method="post">
                         @csrf
                         <div class="row p-b-30">
                             <div class="col-12">

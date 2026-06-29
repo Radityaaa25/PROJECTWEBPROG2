@@ -9,7 +9,18 @@
       </a>
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title"> {{$judul}} </h5>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0"> {{$judul}} </h5>
+            <form action="{{ route('backend.user.index') }}" method="GET" class="form-inline">
+              <label for="role" class="mr-2">Filter Role:</label>
+              <select name="role" id="role" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="">Semua</option>
+                <option value="1" {{ request('role') == '1' ? 'selected' : '' }}>Super Admin</option>
+                <option value="0" {{ request('role') == '0' ? 'selected' : '' }}>Admin</option>
+                <option value="2" {{ request('role') == '2' ? 'selected' : '' }}>User Biasa</option>
+              </select>
+            </form>
+          </div>
           <div class="table-responsive">
             <table id="zero_config" class="table table-striped table-bordered">
               <thead>
@@ -30,11 +41,14 @@
                               <td> {{$row->email}} </td>
                               <td>
                                 @if ($row->role == 1)
-                                  <span class="badge badge-success"></i>
+                                  <span class="badge badge-success">
                                     Super Admin</span>
                                 @elseif($row->role == 0)
-                                  <span class="badge badge-primary"></i>
+                                  <span class="badge badge-primary">
                                     Admin</span>
+                                @elseif($row->role == 2)
+                                  <span class="badge badge-info">
+                                    User Biasa</span>
                                 @endif
                               </td>
                               <td>

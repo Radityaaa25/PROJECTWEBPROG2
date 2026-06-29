@@ -13,9 +13,15 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::orderBy('created_at', 'desc')->get();
+        $query = User::orderBy('created_at', 'desc');
+        
+        if ($request->has('role') && $request->role != '') {
+            $query->where('role', $request->role);
+        }
+        
+        $user = $query->get();
         return view('backend.v_user.index', [
             'judul' => 'Data User',
             'index' => $user
@@ -115,7 +121,7 @@ class UserController extends Controller
             'foto.max' => 'Ukuran file gambar Maksimal adalah 1024 KB.'
         ];
         if ($request->email != $user->email) {
-            $rules['email'] = 'required|max:255|email|unique:user';
+            $rules['email'] = 'required|max:255|email|unique:users,email,' . $id;
         }
         $validatedData = $request->validate($rules, $messages);
         // menggunakan ImageHelper

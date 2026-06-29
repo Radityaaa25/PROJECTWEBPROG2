@@ -118,20 +118,20 @@ class ProdukController extends Controller
         $produk = Produk::findOrFail($id);
         $rules = [
             'nama_produk' => 'required|max:255|unique:produk,nama_produk,' . $id,
-            'kategori_id' => 'required',
-            'status' => 'required',
+            'kategori_id' => 'required|exists:kategori,id',
+            'status' => 'required|in:0,1',
             'detail' => 'required',
-            'harga' => 'required',
-            'berat' => 'required',
-            'stok' => 'required',
-            'foto' => 'image|mimes:jpeg,jpg,png,gif|file|max:1024',
+            'harga' => 'required|numeric|min:0',
+            'berat' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0',
+            'foto' => 'nullable|image|mimes:jpeg,jpg,png,gif|file|max:1024',
         ];
         $messages = [
             'foto.image' => 'Format gambar gunakan file dengan ekstensi jpeg, jpg, png, atau gif.',
             'foto.max' => 'Ukuran file gambar Maksimal adalah 1024 KB.'
         ];
-        $validatedData['user_id'] = auth()->id();
         $validatedData = $request->validate($rules, $messages);
+        $validatedData['user_id'] = auth()->id();
         if ($request->file('foto')) {
             //hapus gambar lama
             if ($produk->foto) {

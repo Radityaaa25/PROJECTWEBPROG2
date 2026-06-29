@@ -11,25 +11,22 @@ class ImageHelper
   ) {
     $destinationPath = public_path($directory);
     $extension = strtolower($file->getClientOriginalExtension());
-    $image = null;
-    // Tentukan metode pembuatan gambar berdasarkan ekstensi file
-    switch ($extension) {
-      case 'jpeg':
-      case 'jpg':
-        $image = imagecreatefromjpeg($file->getRealPath());
-        break;
-      case 'png':
-        // Suppress libpng iCCP profile warning
-        $errorLevel = error_reporting(error_reporting() ^ E_WARNING);
-        $image = imagecreatefrompng($file->getRealPath());
-        error_reporting($errorLevel);
-        break;
-      case 'gif':
-        $image = imagecreatefromgif($file->getRealPath());
-        break;
-      default:
-        throw new \Exception('Unsupported image type');
+    
+    // Gunakan imagecreatefromstring agar PHP dapat mendeteksi format asli secara otomatis
+    // Hal ini mencegah error jika ekstensi file (misal .png) tidak cocok dengan isi file aslinya (misal format aslinya jpg).
+    $imageContent = file_get_contents($file->getRealPath());
+    $errorLevel = error_reporting(error_reporting() ^ E_WARNING); // Suppress warnings
+    $image = imagecreatefromstring($imageContent);
+    error_reporting($errorLevel);
+
+    if (!$image) {
+        throw new \Exception('Gagal memproses gambar. File gambar (' . $extension . ') mungkin rusak atau format aslinya tidak dikenali.');
     }
+
+    // Preserve transparency untuk PNG/GIF
+    imagealphablending($image, false);
+    imagesavealpha($image, true);
+
     // Resize gambar jika lebar diset
     if ($width) {
       $oldWidth = imagesx($image);
@@ -39,6 +36,13 @@ class ImageHelper
         $height = $width / $aspectRatio; // Hitung tinggi dengan mempertahankan aspek rasio
       }
       $newImage = imagecreatetruecolor($width, $height);
+      
+      // Setup transparency untuk gambar baru
+      imagealphablending($newImage, false);
+      imagesavealpha($newImage, true);
+      $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+      imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent);
+
       imagecopyresampled(
         $newImage,
         $image,

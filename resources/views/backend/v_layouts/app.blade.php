@@ -21,6 +21,45 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<style>
+    /* Dark Mode Styles */
+    body.dark-mode, 
+    body.dark-mode #main-wrapper {
+        background-color: #121212 !important;
+        color: #e0e0e0 !important;
+    }
+    body.dark-mode .page-wrapper,
+    body.dark-mode .container-fluid,
+    body.dark-mode .card,
+    body.dark-mode .footer {
+        background-color: #1e1e1e !important;
+        color: #e0e0e0 !important;
+        border-color: #333 !important;
+    }
+    body.dark-mode .left-sidebar,
+    body.dark-mode .sidebar-nav {
+        background-color: #1a1a1a !important;
+    }
+    body.dark-mode .topbar {
+        background-color: #000000 !important;
+    }
+    body.dark-mode .table, 
+    body.dark-mode .table td, 
+    body.dark-mode .table th {
+        color: #e0e0e0 !important;
+        border-color: #444 !important;
+    }
+    body.dark-mode input, 
+    body.dark-mode select, 
+    body.dark-mode textarea {
+        background-color: #333 !important;
+        color: #fff !important;
+        border-color: #555 !important;
+    }
+    body.dark-mode .text-muted {
+        color: #aaa !important;
+    }
+</style>
 </head>
 
 <body>
@@ -109,7 +148,13 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav float-right">
                         <!-- ============================================================== -->
-
+                        <!-- Dark Mode Toggle -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="theme-toggle" title="Toggle Dark/Light Mode">
+                                <i class="mdi mdi-weather-night font-24" id="theme-icon"></i>
+                            </a>
+                        </li>
                         <!-- Comment -->
                         <!-- ============================================================== -->
 
@@ -133,9 +178,9 @@
 waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" ariaexpanded="false">
                                 @if (Auth::user()->foto)
                                     <img src="{{ asset('storage/img-user/' . Auth::user()->foto) }}" alt="user"
-                                        class="rounded-circle" width="31">
+                                        class="rounded-circle" width="31" onerror="this.src='{{ asset('image/img-default.jpg') }}'">
                                 @else
-                                    <img src="{{ asset('storage/img-user/img-default.jpg') }}" alt="user"
+                                    <img src="{{ asset('image/img-default.jpg') }}" alt="user"
                                         class="rounded-circle" width="31">
                                 @endif
                             </a>
@@ -178,12 +223,28 @@ animated">
                 waves-dark sidebar-link" href="{{ route('backend.user.index') }}" aria-expanded="false"><i
                                     class="mdi mdi-account"></i><span class="hide-menu">User</span></a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=" {{ route('backend.transaksi.index') }} "
+                                aria-expanded="false">
+                                <i class="mdi mdi-cart"></i><span class="hide-menu">Transaksi</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=" {{ route('backend.laporan_penjualan.index') }} "
+                                aria-expanded="false">
+                                <i class="mdi mdi-chart-line"></i><span class="hide-menu">Laporan Penjualan</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waveseffect waves-dark"
                                 href="javascript:void(0)" aria-expanded="false"><i class="mdi mdishopping"></i><span
                                     class="hide-menu">Data Produk </span></a>
                             <ul aria-expanded="false" class="collapse first-level">
                                 <li class="sidebar-item"><a href="{{ route('backend.kategori.index') }}" class="sidebar-link"><i
                                             class="mdi mdi-chevron-right"></i><span class="hidemenu"> Kategori </span></a>
+                                </li>
+                                <li class="sidebar-item"><a href="{{ route('backend.produk.index') }}" class="sidebar-link"><i
+                                            class="mdi mdi-chevron-right"></i><span class="hidemenu"> Produk </span></a>
                                 </li>
 
                                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
@@ -353,6 +414,170 @@ animated">
             .catch(error => {
                 console.error(error);
             });
+    </script>
+    <script>
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+        
+        // Cek localStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('mdi-weather-night');
+            themeIcon.classList.add('mdi-weather-sunny');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('mdi-weather-night');
+                themeIcon.classList.add('mdi-weather-sunny');
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('mdi-weather-sunny');
+                themeIcon.classList.add('mdi-weather-night');
+            }
+        });
+    </script>
+    
+    <!-- Chatbot Floating Bubble -->
+    <div id="chatbot-bubble" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; cursor: pointer; width: 60px; height: 60px; background-color: #2962FF; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <i class="mdi mdi-robot font-24"></i>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbot-window" style="display: none; position: fixed; bottom: 90px; right: 20px; z-index: 9998; width: 350px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #ddd;">
+        <div style="background: #2962FF; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <h5 class="m-0 text-white">Asisten AI Admin</h5>
+            <i class="mdi mdi-close" id="chatbot-close" style="cursor: pointer; font-size: 18px;"></i>
+        </div>
+        <div id="chatbot-messages" style="height: 300px; overflow-y: auto; padding: 15px; background: #f8f9fa;">
+            <div class="d-flex mb-3">
+                <div class="p-2 bg-info text-white rounded" style="max-width: 80%;">
+                    Halo Admin! Saya asisten AI Anda. Ada yang bisa saya bantu terkait pengelolaan toko hari ini?
+                </div>
+            </div>
+        </div>
+        <div style="padding: 10px; border-top: 1px solid #ddd; background: white; display: flex;">
+            <input type="text" id="chatbot-input" class="form-control mr-2" placeholder="Ketik pesan..." style="border-radius: 20px; background: #fff !important; color: #333 !important; border: 1px solid #ccc !important;">
+            <button id="chatbot-send" class="btn btn-primary" style="border-radius: 20px;"><i class="mdi mdi-send"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Chatbot Bubble Draggable Logic
+        const bubble = document.getElementById('chatbot-bubble');
+        const chatWindow = document.getElementById('chatbot-window');
+        const chatClose = document.getElementById('chatbot-close');
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        bubble.addEventListener('mousedown', function(e) {
+            isDragging = false; // reset
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = bubble.offsetLeft;
+            initialY = bubble.offsetTop;
+            bubble.style.transition = 'none';
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (startX !== undefined && startY !== undefined) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                    isDragging = true;
+                    bubble.style.left = initialX + dx + 'px';
+                    bubble.style.top = initialY + dy + 'px';
+                    bubble.style.right = 'auto'; // Disable right/bottom positioning when dragged
+                    bubble.style.bottom = 'auto';
+                }
+            }
+        });
+
+        document.addEventListener('mouseup', function(e) {
+            startX = undefined;
+            startY = undefined;
+        });
+
+        // Toggle Chat Window
+        bubble.addEventListener('click', function(e) {
+            if (isDragging) return; // Prevent opening if it was a drag
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatWindow.style.display = 'none';
+        });
+
+        // Chat Logic
+        const chatInput = document.getElementById('chatbot-input');
+        const chatSend = document.getElementById('chatbot-send');
+        const chatMessages = document.getElementById('chatbot-messages');
+
+        function appendChat(sender, text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `d-flex mb-3 ${isUser ? 'justify-content-end' : ''}`;
+            
+            // Format line breaks and basic markdown-like syntax
+            let formattedText = text.replace(/\n/g, '<br>');
+            formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            msgDiv.innerHTML = `
+                <div class="p-2 rounded ${isUser ? 'bg-primary text-white' : 'bg-info text-white'}" style="max-width: 80%;">
+                    ${formattedText}
+                </div>
+            `;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendChat('Anda', text, true);
+            chatInput.value = '';
+            
+            const loadingId = 'loading-' + Date.now();
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'd-flex mb-3';
+            loadingDiv.id = loadingId;
+            loadingDiv.innerHTML = `<div class="p-2 bg-secondary text-white rounded">Sedang mengetik...</div>`;
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('{{ route("backend.chatbot.chat") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ message: text })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+
+                if (response.ok) {
+                    appendChat('AI', data.reply);
+                } else {
+                    appendChat('System', 'Error: ' + data.reply);
+                }
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                appendChat('System', 'Gagal terhubung ke server.');
+            }
+        }
+
+        chatSend.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        });
     </script>
     <!-- form keluar app end -->
 </body>

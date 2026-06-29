@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->enum('role', [0, 1, 2])->default(0); // 0 = Admin, 1 = SuperAdmin 2 = Customer
             $table->boolean('status'); // 0 = Belum aktif, 1 = aktif 
             $table->string('password');
-            $table->string('hp', 13)->nullable();
+            $table->string('hp', 20)->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();
         });
