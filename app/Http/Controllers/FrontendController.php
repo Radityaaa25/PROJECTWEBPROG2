@@ -8,12 +8,20 @@ use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Kategori;
+
 class FrontendController extends Controller
 {
     public function index()
     {
         $produks = Produk::orderBy('id', 'desc')->take(8)->get();
-        return view('frontend.home', compact('produks'));
+        $kategoris = Kategori::with(['produk' => function($query) {
+            $query->orderBy('id', 'desc');
+        }])->get()->map(function($kategori) {
+            $kategori->setRelation('produk', $kategori->produk->take(4));
+            return $kategori;
+        });
+        return view('frontend.home', compact('produks', 'kategoris'));
     }
 
     public function katalog()

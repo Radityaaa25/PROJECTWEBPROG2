@@ -1,5 +1,20 @@
 
 <?php $__env->startSection('content'); ?>
+  <!-- Flash Messages -->
+  <?php if(session('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <?php echo e(session('success')); ?>
+
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+  <?php if(session('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <?php echo e(session('error')); ?>
+
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
   <!-- contentAwal -->
   <div class="row">
     <div class="col-12">
@@ -53,7 +68,7 @@
                                       <?php echo method_field('delete'); ?>
                                       <?php echo csrf_field(); ?>
                                       <button type="submit" class="btn btn-danger btn-sm
-                              show_confirm" data-konf-delete="<?php echo e($row->nama); ?>" title='Hapus Data'>
+                              show_confirm" data-konf-delete="<?php echo e($row->nama_produk); ?>" title='Hapus Data'>
                                         <i class="fas fa-trash"></i> Hapus</button>
                                     </form>
                                   </td>

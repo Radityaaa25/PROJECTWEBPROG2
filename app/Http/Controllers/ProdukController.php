@@ -184,6 +184,19 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $produk = Produk::findOrFail($id);
+
+        // Cek apakah produk masih terkait transaksi yang belum selesai
+        $transaksiAktif = \App\Models\DetailTransaksi::where('produk_id', $id)
+            ->whereHas('transaksi', function($query) {
+                $query->where('status', '!=', 'selesai');
+            })->exists();
+
+        if ($transaksiAktif) {
+            return redirect()->route('backend.produk.index')->with('error', 'Produk tidak bisa dihapus karena masih terkait dengan transaksi yang belum selesai.');
+        }
+
+        // Hapus detail transaksi yang sudah selesai terkait produk ini
+        \App\Models\DetailTransaksi::where('produk_id', $id)->delete();
         $directory = public_path('storage/img-produk/');
         if ($produk->foto) {
             // Hapus gambar asli

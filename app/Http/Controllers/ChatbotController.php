@@ -69,7 +69,6 @@ class ChatbotController extends Controller
             if ($response->successful()) {
                 $reply = $response->json()['choices'][0]['message']['content'] ?? 'Maaf, saya tidak mengerti.';
                 
-                // Cek dan hapus jika model (seperti Qwen/Deepseek) secara tidak sengaja memunculkan block <think>
                 $reply = preg_replace('/<think>.*?<\/think>/is', '', $reply);
                 
                 return response()->json(['reply' => trim($reply)]);

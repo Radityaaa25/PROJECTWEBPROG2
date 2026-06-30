@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toko Online</title>
+    <title>Ramela Bakery</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +11,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body {
             background-color: #f0f2f5;
@@ -68,23 +69,44 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
 
-        /* Hover Animations */
-        .btn {
+        /* Hover & Interactive Animations */
+        .btn, button, input, select, textarea {
             transition: all 0.3s ease;
         }
-        .btn:hover {
+        .btn:hover, button:not(.navbar-toggler):hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+        input:hover, select:hover, textarea:hover {
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 8px rgba(13,110,253,0.2);
+        }
+        input:focus, select:focus, textarea:focus {
+            box-shadow: 0 0 12px rgba(13,110,253,0.4) !important;
+            transform: translateY(-2px);
+        }
         .hover-scale {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
+            display: inline-block;
         }
         .hover-scale:hover {
-            transform: scale(1.05);
+            transform: scale(1.2);
+            color: #0d6efd !important;
+        }
+        a {
+            transition: all 0.3s ease;
+        }
+        a:not(.btn):not(.navbar-brand):not(.nav-link):not(.hover-scale):not(.card-img-top):hover {
+            color: #0d6efd !important;
+            transform: translateX(3px);
+            display: inline-block;
         }
         .nav-link {
             position: relative;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+            transform: translateY(-2px);
         }
         .nav-link::after {
             content: '';
@@ -99,6 +121,16 @@
         .nav-link:hover::after {
             width: 100%;
             left: 0;
+        }
+        #theme-toggle {
+            transition: all 0.3s ease;
+        }
+        #theme-toggle:hover {
+            transform: rotate(30deg) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        body.dark-mode #theme-toggle:hover {
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
         }
         
         /* Dark Mode Glassmorphism */
@@ -118,8 +150,15 @@
             border-color: rgba(255, 255, 255, 0.1) !important;
         }
         body.dark-mode .footer {
+            background-color: #1e1e24 !important;
             color: #aaa;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid rgba(255,255,255,0.05) !important;
+        }
+        body.dark-mode .nav-link-footer {
+            color: #aaa !important;
+        }
+        body.dark-mode .nav-link-footer:hover {
+            color: #fff !important;
         }
         body.dark-mode .navbar-brand,
         body.dark-mode .nav-link,
@@ -152,7 +191,7 @@
     <nav class="navbar navbar-expand-lg navbar-light navbar-floating">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="{{ route('frontend.home') }}">
-                <img src="{{ asset('image/logo.png') }}" alt="Toko Online" height="35" onerror="this.outerHTML='<span class=\'fw-bold\'>TOKO ONLINE</span>'">
+                <img src="{{ asset('image/logo.png') }}" alt="Ramela Bakery" height="35" onerror="this.outerHTML='<span class=\'fw-bold\'>RAMELA BAKERY</span>'">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -207,10 +246,32 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer text-center mt-auto">
+    <footer class="footer mt-auto" style="background-color: #fff; padding: 50px 0 20px 0; border-top: 1px solid rgba(0,0,0,0.05);">
         <div class="container">
-            <h4 class="fw-bold mb-3">Toko Online</h4>
-            <p class="mb-0 text-muted">&copy; {{ date('Y') }} Hak Cipta Dilindungi. Didesain dengan penuh gaya.</p>
+            <div class="row mb-4">
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="fw-bold mb-3">Ramela Bakery</h4>
+                    <p class="text-muted">Menyajikan aneka roti dan kue dengan bahan premium dan cita rasa yang tak terlupakan. Nikmati kelezatan di setiap gigitan.</p>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="fw-bold mb-3">Tautan Cepat</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{{ route('frontend.home') }}" class="text-decoration-none text-muted nav-link-footer">Beranda</a></li>
+                        <li class="mb-2"><a href="{{ route('frontend.katalog') }}" class="text-decoration-none text-muted nav-link-footer">Katalog Produk</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="fw-bold mb-3">Ikuti Kami</h5>
+                    <div class="d-flex gap-3">
+                        <a href="https://www.instagram.com/labibbss/" class="text-muted fs-4 hover-scale"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.facebook.com/" class="text-muted fs-4 hover-scale"><i class="bi bi-facebook"></i></a>
+                        <a href="https://wa.me/+6281299597075" class="text-muted fs-4 hover-scale"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-3 border-top">
+                <p class="mb-0 text-muted">&copy; {{ date('Y') }} Ramela Bakery. Hak Cipta Dilindungi.</p>
+            </div>
         </div>
     </footer>
 
@@ -242,6 +303,13 @@
                 themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
                 themeIcon.classList.remove('text-warning');
             }
+        });
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
         });
     </script>
 </body>

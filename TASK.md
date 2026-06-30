@@ -85,3 +85,50 @@ File ini berisi catatan lengkap dari seluruh aktivitas, penulisan kode, penambah
   - Membuang logika lama (blok `switch case` yang membaca *file* berdasarkan nama akhir/ekstensi).
   - Menggantinya dengan memori tangguh `imagecreatefromstring(file_get_contents())` yang membaca konten asli (MIME) dari dalam *file* terlepas apa pun ekstensi namanya.
   - Memasukkan lapisan keamanan `if (!$image)` untuk menangkap *error* korupsi *file*, dan merawat nilai *Alpha/Transparency* agar latar belakang PNG transparan tidak hangus.
+
+---
+
+## 5. Improvement Frontend (Ramela Bakery)
+
+### 5.1 Perubahan Nama dan Tampilan Beranda
+- **Tujuan**: Menyesuaikan identitas toko dan meningkatkan UI/UX halaman pengguna.
+- **Lokasi File & Perubahan**:
+  - `resources/views/frontend/layouts/app.blade.php`: 
+    - Mengubah `<title>` dan *alt* logo navbar menjadi "Ramela Bakery".
+    - Merombak tampilan *footer* agar lebih profesional dengan membaginya ke dalam beberapa kolom (Informasi, Tautan Cepat, Sosial Media).
+    - Menambahkan *library* AOS (Animate On Scroll) untuk efek transisi dan animasi masuk.
+  - `resources/views/frontend/home.blade.php`:
+    - Mengubah tulisan *Hero Section* menjadi "Selamat Datang di Ramela Bakery".
+    - Menambahkan atribut animasi `data-aos` pada elemen-elemen halaman.
+    - Menambahkan section daftar **Produk berdasarkan Kategori** tepat di bawah section "Produk Terbaru".
+
+### 5.2 Penyesuaian Data Kategori
+- **Tujuan**: Mengambil data relasi antara Kategori dan Produk.
+- **Lokasi File & Perubahan**:
+  - `app/Models/Kategori.php`: Menambahkan metode relasi `produk()` (`hasMany`).
+  - `app/Http/Controllers/FrontendController.php`: Memodifikasi method `index()` untuk menarik data kategori beserta produknya yang kemudian di-*passing* ke `home.blade.php`.
+
+### 5.3 Efek Hover Interaktif Global
+- **Tujuan**: Memberikan respon visual yang dinamis di setiap elemen yang bisa diinteraksi agar terasa lebih "*hidup*".
+- **Lokasi File & Perubahan**:
+  - `resources/views/frontend/layouts/app.blade.php`: Menambahkan aturan CSS global untuk `a:hover`, `.btn:hover`, `input:hover`, `select:hover`, `textarea:hover`, serta animasi rotasi unik untuk tombol *Theme Toggle* (`#theme-toggle:hover`). Efek ini berlaku pada seluruh halaman yang mengekstensi *layout* utama.
+
+---
+
+## 6. Perbaikan Bug: Foreign Key Constraint pada Penghapusan Data
+
+### 6.1 Error Hapus Kategori (Integrity Constraint Violation)
+- **Gejala**: Muncul error `SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row` saat menghapus kategori yang masih memiliki produk.
+- **Penyebab**: Method `destroy()` langsung menghapus data tanpa mengecek apakah masih ada produk yang mereferensi kategori tersebut via *foreign key* `kategori_id`.
+- **Lokasi Perbaikan**:
+  - `app/Http/Controllers/KategoriController.php`: Menambahkan pengecekan `$kategori->produk()->count()` sebelum menghapus. Jika masih ada produk terkait, redirect dengan pesan error yang ramah.
+  - `resources/views/backend/v_kategori/index.blade.php`: Menambahkan blok alert `success` (hijau) dan `error` (merah) agar *flash message* dari controller tampil di halaman.
+
+### 6.2 Error Hapus Produk (Integrity Constraint Violation)
+- **Gejala**: Muncul error `SQLSTATE[23000]: Integrity constraint violation: 1451` saat menghapus produk yang pernah masuk ke dalam transaksi (`detail_transaksi`).
+- **Penyebab**: Method `destroy()` langsung menghapus produk tanpa mengecek referensi di tabel `detail_transaksi`.
+- **Lokasi Perbaikan**:
+  - `app/Http/Controllers/ProdukController.php`: Mengubah logika penghapusan menjadi dua tahap:
+    1. Cek apakah produk masih terkait transaksi yang **belum selesai** (`status != 'selesai'`). Jika ya, tolak penghapusan dengan pesan error.
+    2. Jika semua transaksi terkait sudah berstatus **selesai**, hapus record `detail_transaksi` terkait terlebih dahulu, baru hapus produknya.
+  - `resources/views/backend/v_produk/index.blade.php`: Menambahkan blok alert `success` dan `error` agar pesan flash tampil di halaman.

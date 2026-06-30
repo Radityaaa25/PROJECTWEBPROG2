@@ -1,5 +1,20 @@
 
 <?php $__env->startSection('content'); ?>
+  <!-- Flash Messages -->
+  <?php if(session('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <?php echo e(session('success')); ?>
+
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+  <?php if(session('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <?php echo e(session('error')); ?>
+
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
   <!-- contentAwal -->
   <div class="row">
     <div class="col-12">

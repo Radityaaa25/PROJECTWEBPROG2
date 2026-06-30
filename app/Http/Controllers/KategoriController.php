@@ -77,7 +77,13 @@ public function update(Request $request, string $id)
      */
     public function destroy(string $id)
     {
-        $kategori = kategori::findOrFail($id);
+        $kategori = Kategori::findOrFail($id);
+
+        // Cek apakah kategori masih memiliki produk
+        if ($kategori->produk()->count() > 0) {
+            return redirect()->route('backend.kategori.index')->with('error', 'Kategori tidak bisa dihapus karena masih memiliki produk terkait.');
+        }
+
         $kategori->delete();
         return redirect()->route('backend.kategori.index')->with('success', 'Data berhasil dihapus');
     }
